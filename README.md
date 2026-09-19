@@ -15,7 +15,6 @@ A 6-month manufacturing supply planning analysis designed to identify projected 
 ## Business Problem
 
 A portion of the 500-material portfolio is projected to experience stockouts within the next six months, creating supply shortages and financial exposure.
-The objective is to convert supply and demand data into a prioritized exception list that supports proactive supply planning decisions.
 
 ---
 
