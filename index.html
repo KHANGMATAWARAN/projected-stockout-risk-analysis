@@ -212,6 +212,158 @@
         padding: 24px 20px;
       }
     }
+/* Data Integration Model */
+
+.model-intro {
+    margin-bottom: 22px;
+}
+
+.integration-model {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.model-group {
+    border: 1px solid #d8dee4;
+    border-radius: 6px;
+    padding: 20px;
+    background: #f8fafc;
+}
+
+.model-group h3 {
+    margin: 0 0 18px;
+    font-size: 16px;
+    color: #172f47;
+}
+
+.model-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+
+.data-table {
+    width: 210px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.table-title {
+    padding: 10px 12px;
+    font-weight: 700;
+    font-size: 13px;
+    background: #e9eff5;
+    color: #172f47;
+    border-bottom: 1px solid #cbd5e1;
+}
+
+.table-field {
+    padding: 7px 12px;
+    font-size: 12px;
+    border-bottom: 1px solid #edf1f5;
+}
+
+.table-field:last-child {
+    border-bottom: none;
+}
+
+.key-field {
+    font-weight: 600;
+}
+
+.relationship {
+    width: 135px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.relationship span {
+    display: block;
+    font-size: 10px;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.relationship-line {
+    height: 1px;
+    background: #64748b;
+    position: relative;
+}
+
+.relationship-line::before,
+.relationship-line::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #64748b;
+    border-radius: 50%;
+    top: -2px;
+}
+
+.relationship-line::before {
+    left: 0;
+}
+
+.relationship-line::after {
+    right: 0;
+}
+
+.model-output {
+    width: 310px;
+    margin: 22px auto 0;
+    padding: 12px 16px;
+    background: #ffffff;
+    border: 1px solid #9fb3c8;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.model-output span,
+.model-output small {
+    display: block;
+    color: #64748b;
+    font-size: 11px;
+}
+
+.model-output strong {
+    display: block;
+    margin: 4px 0;
+    color: #172f47;
+    font-size: 14px;
+}
+
+@media (max-width: 900px) {
+    .model-row {
+        flex-direction: column;
+    }
+
+    .relationship {
+        width: 1px;
+        height: 45px;
+        margin: 4px 0;
+    }
+
+    .relationship span {
+        width: 130px;
+        transform: translateX(-65px);
+    }
+
+    .relationship-line {
+        width: 1px;
+        height: 25px;
+    }
+
+    .data-table {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+    
   </style>
 </head>
 
@@ -321,6 +473,101 @@
     </p>
   </section>
 
+<section>
+    <h2>Data Integration Model</h2>
+
+    <p class="model-intro">
+        Source datasets were validated against master data and integrated using shared planning keys before stockout-risk analysis.
+    </p>
+
+    <div class="integration-model">
+
+        <div class="model-group">
+            <h3>Master Data Validation</h3>
+
+            <div class="model-row">
+
+                <div class="data-table">
+                    <div class="table-title">Material Master</div>
+                    <div class="table-field key-field">Material_ID</div>
+                </div>
+
+                <div class="relationship">
+                    <span>Material_ID</span>
+                    <div class="relationship-line"></div>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-title">Demand / Inventory Sources</div>
+                    <div class="table-field">Demand Actuals</div>
+                    <div class="table-field">Demand Forecast</div>
+                    <div class="table-field">Inventory Snapshot</div>
+                </div>
+
+                <div class="relationship">
+                    <span>Customer_ID</span>
+                    <div class="relationship-line"></div>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-title">Customer Master</div>
+                    <div class="table-field key-field">Customer_ID</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="model-group">
+            <h3>Stockout Risk Integration</h3>
+
+            <div class="model-row">
+
+                <div class="data-table">
+                    <div class="table-title">Demand Forecast</div>
+                    <div class="table-field key-field">Material_ID</div>
+                    <div class="table-field key-field">Forecast_Month</div>
+                    <div class="table-field">Forecast Units</div>
+                </div>
+
+                <div class="relationship">
+                    <span>Material_ID + Month</span>
+                    <div class="relationship-line"></div>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-title">Planned Supply</div>
+                    <div class="table-field key-field">Material_ID</div>
+                    <div class="table-field key-field">Receipt_Month</div>
+                    <div class="table-field">Supply Units</div>
+                    <div class="table-field">Supply Status</div>
+                </div>
+
+                <div class="relationship">
+                    <span>Material_ID</span>
+                    <div class="relationship-line"></div>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-title">Inventory Snapshot</div>
+                    <div class="table-field key-field">Material_ID</div>
+                    <div class="table-field">Site_ID</div>
+                    <div class="table-field">Available Inventory</div>
+                    <div class="table-field">Safety Stock</div>
+                </div>
+
+            </div>
+
+            <div class="model-output">
+                <span>Integrated output</span>
+                <strong>stockout_risk_analysis</strong>
+                <small>Analysis-ready dataset → Python / Spark → Power BI</small>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+  
   <section>
     <h2>Methodology</h2>
 
