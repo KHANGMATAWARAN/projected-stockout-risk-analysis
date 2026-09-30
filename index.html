@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Projected Stockout Risk & Supply Coverage</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f6f8fa;
+      color: #172b3f;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: auto;
+      padding: 0 28px;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #d8dee4;
+      padding: 54px 0 42px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 40px;
+      line-height: 1.15;
+      color: #172f47;
+    }
+
+    .subtitle {
+      margin: 0 0 18px;
+      font-size: 18px;
+      font-style: italic;
+      color: #475569;
+    }
+
+    .tools-line {
+      font-size: 14px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 18px;
+    }
+
+    .intro {
+      max-width: 900px;
+      font-size: 17px;
+      color: #334155;
+    }
+
+    main {
+      padding: 36px 0 60px;
+    }
+
+    section {
+      background: #ffffff;
+      border: 1px solid #e1e6eb;
+      border-radius: 8px;
+      padding: 30px 34px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      margin: 0 0 20px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid #d8dee4;
+      font-size: 24px;
+      color: #172f47;
+    }
+
+    h3 {
+      margin: 22px 0 8px;
+      font-size: 17px;
+      color: #172f47;
+    }
+
+    p {
+      margin: 8px 0 14px;
+    }
+
+    ul, ol {
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 7px;
+    }
+
+    .dashboard {
+      width: 100%;
+      display: block;
+      border: 1px solid #d8dee4;
+      border-radius: 5px;
+    }
+
+    .north-star {
+      background: #f4f7fa;
+      border-left: 5px solid #274f75;
+      padding: 20px 24px;
+      margin-top: 20px;
+    }
+
+    .north-star strong {
+      display: block;
+      font-size: 30px;
+      color: #274f75;
+      margin-bottom: 2px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .metric {
+      background: #f7f9fb;
+      border: 1px solid #e1e6eb;
+      border-radius: 6px;
+      padding: 18px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 25px;
+      color: #274f75;
+    }
+
+    .metric span {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .method-card {
+      border: 1px solid #e1e6eb;
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    .method-card h3 {
+      margin-top: 0;
+    }
+
+    .files {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .file-link {
+      display: block;
+      text-decoration: none;
+      border: 1px solid #d8dee4;
+      border-radius: 6px;
+      padding: 16px 18px;
+      color: #172f47;
+      background: #ffffff;
+      font-weight: 600;
+    }
+
+    .file-link:hover {
+      background: #f4f7fa;
+      border-color: #94a3b8;
+    }
+
+    .file-link span {
+      display: block;
+      font-size: 12px;
+      font-weight: normal;
+      color: #64748b;
+      margin-top: 3px;
+    }
+
+    footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+      padding: 10px 0 45px;
+    }
+
+    @media (max-width: 800px) {
+      h1 {
+        font-size: 31px;
+      }
+
+      .metrics,
+      .method-grid,
+      .files {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <h1>Projected Stockout Risk & Supply Coverage</h1>
+    <p class="subtitle">6-Month Manufacturing Supply Outlook</p>
+
+    <div class="tools-line">
+      Supply Planning Analytics Portfolio Project | Databricks SQL | Python / Spark | Power BI
+    </div>
+
+    <p class="intro">
+      A manufacturing supply planning analysis designed to identify projected stockout risks,
+      quantify supply gaps and financial exposure, and prioritize materials requiring recovery action.
+    </p>
+  </div>
+</header>
+
+<main class="container">
+
+  <section>
+    <h2>Dashboard</h2>
+
+    <img
+      class="dashboard"
+      src="POWERBI_stockout_risk_dashboard_.png"
+      alt="Projected Stockout Risk and Supply Coverage Power BI Dashboard"
+    >
+
+    <div class="north-star">
+      <strong>$2.08M</strong>
+      Projected stockout value across the six-month planning horizon.
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <strong>500</strong>
+        <span>Total Materials</span>
+      </div>
+
+      <div class="metric">
+        <strong>139</strong>
+        <span>Materials at Risk</span>
+      </div>
+
+      <div class="metric">
+        <strong>57</strong>
+        <span>Critical Materials</span>
+      </div>
+
+      <div class="metric">
+        <strong>5,985</strong>
+        <span>Critical Supply Gap Units</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Business Problem</h2>
+
+    <p>
+      A portion of the 500-material portfolio is projected to experience stockouts within
+      the next six months, creating supply shortages and financial exposure.
+    </p>
+
+    <p>The analysis was designed to determine:</p>
+
+    <ul>
+      <li>Which materials are projected to stock out?</li>
+      <li>When is each stockout expected to occur?</li>
+      <li>How large is the projected supply gap?</li>
+      <li>What is the financial exposure of the shortage?</li>
+      <li>Which materials require the earliest recovery action?</li>
+    </ul>
+
+    <p>
+      The objective is to convert supply and demand data into a prioritized exception list
+      that supports proactive supply planning decisions.
+    </p>
+  </section>
+
+  <section>
+    <h2>Dataset</h2>
+
+    <p>
+      The project uses a synthetic manufacturing supply planning dataset representing
+      500 materials across multiple plants.
+    </p>
+
+    <p>The analysis integrates:</p>
+
+    <ul>
+      <li>Material master data</li>
+      <li>Customer master data</li>
+      <li>Historical demand actuals</li>
+      <li>Demand forecast</li>
+      <li>Inventory snapshots</li>
+      <li>Planned supply</li>
+    </ul>
+
+    <p>
+      The synthetic dataset was created with AI assistance for portfolio demonstration
+      purposes and does not contain confidential company data.
+    </p>
+  </section>
+
+  <section>
+    <h2>Methodology</h2>
+
+    <div class="method-grid">
+
+      <div class="method-card">
+        <h3>Databricks SQL</h3>
+        <p>Data preparation, validation, integration, and stockout-risk calculations.</p>
+        <ul>
+          <li>Record and uniqueness checks</li>
+          <li>Duplicate and missing-value validation</li>
+          <li>Master-data consistency checks</li>
+          <li>Demand and supply integration</li>
+        </ul>
+      </div>
+
+      <div class="method-card">
+        <h3>Python / Spark</h3>
+        <p>Analytical validation and supply-risk analysis using Spark DataFrames.</p>
+        <ul>
+          <li>Material-level stockout exposure</li>
+          <li>Critical-material prioritization</li>
+          <li>Supply-gap concentration</li>
+          <li>Plant-level exposure</li>
+          <li>Recovery timing</li>
+        </ul>
+      </div>
+
+      <div class="method-card">
+        <h3>Power BI</h3>
+        <p>
+          Decision-support visualization focused on exceptions, financial exposure,
+          material priorities, and recovery timing.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Key Findings</h2>
+
+    <ul>
+      <li>500 materials were evaluated across the six-month planning horizon.</li>
+      <li>139 materials were identified as at risk.</li>
+      <li>57 materials were classified as critical.</li>
+      <li>Critical materials represent a projected 5,985-unit supply gap.</li>
+      <li>Total projected stockout exposure is approximately $2.08M.</li>
+      <li>Supply-gap exposure is concentrated among a smaller group of critical materials.</li>
+      <li>Plant-level exposure varies, requiring targeted recovery priorities.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Supply Planning Insights</h2>
+
+    <p>
+      Identifying a projected stockout alone is not sufficient for prioritization.
+      Materials with larger supply gaps, higher financial exposure, and longer lead times
+      require earlier intervention.
+    </p>
+
+    <p>
+      Recovery timing should therefore consider the expected stockout month together with
+      the lead time required to replenish the material. This creates a forward-looking
+      exception-management approach rather than reacting only after inventory becomes unavailable.
+    </p>
+  </section>
+
+  <section>
+    <h2>Recommendations</h2>
+
+    <ol>
+      <li>
+        <strong>Prioritize critical materials by supply-gap exposure.</strong>
+        Focus planner attention on materials contributing the largest projected shortages.
+      </li>
+
+      <li>
+        <strong>Trigger recovery actions based on lead time.</strong>
+        Review and escalate long-lead-time materials before their projected stockout month.
+      </li>
+
+      <li>
+        <strong>Use financial exposure alongside unit shortages.</strong>
+        Prioritize shortages using both operational volume and projected stockout value.
+      </li>
+
+      <li>
+        <strong>Manage recovery priorities by plant.</strong>
+        Direct recovery efforts toward locations with the highest concentration of critical exposure.
+      </li>
+
+      <li>
+        <strong>Refresh the analysis each planning cycle.</strong>
+        Recalculate stockout risk as demand, inventory, and planned supply conditions change.
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Project Files</h2>
+
+    <p>
+      Technical project files are available for review:
+    </p>
+
+    <div class="files">
+
+      <a class="file-link"
+         href="DATABRICKS_SQL_stockout_risk_data_preparation_and_analysis.sql">
+        Databricks SQL
+        <span>Data preparation, integration, validation, and analysis</span>
+      </a>
+
+      <a class="file-link"
+         href="DATABRICKS_PYTHON_stockout_risk_analysis.py">
+        Databricks Python
+        <span>Stockout-risk analysis using Python / Spark</span>
+      </a>
+
+      <a class="file-link"
+         href="POWERBI_stockout_risk_dashboard.pbix">
+        Power BI Report
+        <span>Interactive dashboard file</span>
+      </a>
+
+      <a class="file-link"
+         href="POWERBI_stockout_risk_dashboard_.png">
+        Dashboard Preview
+        <span>Full dashboard image</span>
+      </a>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Conclusion</h2>
+
+    <p>
+      This project demonstrates an end-to-end supply planning analytics workflow that
+      transforms demand, inventory, and planned supply data into actionable stockout-risk priorities.
+    </p>
+
+    <p>
+      The analysis moves beyond reporting inventory levels by identifying
+      <strong>what is at risk, when the risk occurs, how large the exposure is,
+      and when recovery action should begin.</strong>
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  Supply Planning Analytics Portfolio Case Study
+</footer>
+
+</body>
+</html>
